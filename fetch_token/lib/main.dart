@@ -1,3 +1,4 @@
+import 'package:fetch_token/login_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -75,6 +76,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
+
     return Scaffold(
       appBar: AppBar(
         // TRY THIS: Try changing the color here to a specific color (to
@@ -85,39 +88,45 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                color: Colors.red,
-                child: const Center(child: Text('1')),
-              ),
-            ),
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
+      body: LayoutBuilder(
+        builder: (context,constraints){
+          final screenWidth = constraints.maxWidth;
+
+          // スマホ判定（例: 600未満をスマホとする）
+          final isMobile = screenWidth < 600;
+
+          // 幅の比率を決定
+          final leftRightFlex = isMobile ? 1 : 3; // スマホでは最小、タブレット以上では15%
+          final contentFlex = isMobile ? 8 : 14;  // スマホでは80%、タブレット以上では70%
+
+          return Row(
+            children: [
+                Expanded(//左ブロック
+                  flex: leftRightFlex,
+                  child: Container(color: Colors.red,)
+                  ),
+                Expanded(//中央ブロック
+                  flex: contentFlex,
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: 800),
+                      child: Container(
+                        color: Colors.blue,
+                        padding: EdgeInsets.all(16),
+                        child: Center(
+                          child:  LoginPage()
+                          ),//メインコンテンツ
+                        ),
+                      ),
+                    )
+                  ),
+                Expanded(//右ブロック
+                  flex: leftRightFlex,
+                  child: Container(color: Colors.red,)
+                  ),
+            ],
+          );
+        }),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',

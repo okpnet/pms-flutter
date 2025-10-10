@@ -1,0 +1,17 @@
+import 'package:fetch_token/file_helper.dart';
+import 'package:pms_extends/urlconfigs/api_url_config.dart';
+
+class ParameterModel  {
+  String? baseUrl;
+  String? apiPath;
+  String? token;
+  String? certFilePath;
+
+  Future<ApiUrlConfig> convrt() async {
+    return ApiUrlConfig(
+      baseUrl: baseUrl ?? "",
+      apiPath: apiPath ?? "",
+      certData: certFilePath==null || certFilePath!.length==0 ? null  : await FileHelper.readBuffer(certFilePath!),
+    );
+  }
+}
