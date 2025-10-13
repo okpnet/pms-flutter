@@ -23,6 +23,14 @@ class PkceAuthenticatorProvider {
     required this.postProvider,
   });
 
+  factory PkceAuthenticatorProvider.create(PkceUrlConfig urlConfig, AuthStateModel state) {
+    return PkceAuthenticatorProvider(
+      urlConfig: urlConfig,
+      state: state,
+      postProvider: HttpPostProvider(),
+    );
+  }
+
   factory PkceAuthenticatorProvider.create(
     String pkceUrljsonSource,
     AuthStateModel state,

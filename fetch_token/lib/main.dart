@@ -1,4 +1,5 @@
 import 'package:fetch_token/login_page.dart';
+import 'package:fetch_token/parameter_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -114,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         color: Colors.blue,
                         padding: EdgeInsets.all(16),
                         child: Center(
-                          child:  LoginPage()
+                          child:  ParameterPage()
                           ),//メインコンテンツ
                         ),
                       ),

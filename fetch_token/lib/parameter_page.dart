@@ -1,7 +1,9 @@
+import 'dart:ffi';
+
 import 'package:fetch_token/parameter_model.dart';
 import 'package:flutter/material.dart';
 import 'package:pms_extends/urlconfigs/api_url_config.dart';
-import 'package:pms_pkce_lib/pkce_authoricate_provider.dart';
+import 'package:pms_pkce_lib/providers/pms_provider.dart';
 
 ApiUrlConfig defaultApiUrlConfig = ApiUrlConfig(
   baseUrl: 'https://example.com',
@@ -43,7 +45,7 @@ class _ParameterPageState extends State<ParameterPage> {
             labelText: 'API Path',
           ),
           onChanged: (value) {
-            parameterModel.apiPath = value;
+            parameterModel.clientId = value;
           },
         ),
         SizedBox(height: 16),
@@ -74,7 +76,14 @@ class _ParameterPageState extends State<ParameterPage> {
             print('Base URL: ${config.baseUrl}');
             print('API Path: ${config.apiPath}');
             print('Cert Data Length: ${config.certData?.lengthInBytes ?? 0}');
-            final provider=PkceAuthoricateProvider();
+            final authModel=AuthStateModel(pkce:PKCEModel.generate());
+            final 
+            final provider=PkceAuthenticatorProvider.create();
+              postProvider: HttpPostProvider(),
+              urlConfig: config,
+
+            );
+            provider.
           },
           child: Text('Get    Token'),
         ),
