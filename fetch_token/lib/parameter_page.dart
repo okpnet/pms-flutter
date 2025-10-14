@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:fetch_token/parameter_model.dart';
 import 'package:flutter/material.dart';
