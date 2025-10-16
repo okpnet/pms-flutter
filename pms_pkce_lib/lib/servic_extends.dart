@@ -5,7 +5,7 @@ extension ServicExtends on GetIt{
   GetIt addPmsService(String pkceUrljsonSource){
     final getit=GetIt.instance;
     getit.registerSingleton<AuthStateModel>(AuthStateModel(pkce: PKCEModel.generate()));
-    getit.registerSingleton<PkceAuthenticatorProvider>(PkceAuthenticatorProvider.create(pkceUrljsonSource, getit<AuthStateModel>()));
+    getit.registerSingleton<PkceAuthenticatorProvider>(PkceAuthenticatorProvider.createFromJson(pkceUrljsonSource, getit<AuthStateModel>()));
     return GetIt.instance;
   }
 }

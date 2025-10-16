@@ -1,8 +1,12 @@
 
-import 'package:fetch_token/parameter_model.dart';
+import 'package:fetch_token/models/parameter_model.dart';
+import 'package:fetch_token/pkce_proviers_struct.dart';
 import 'package:flutter/material.dart';
-import 'package:pms_extends/urlconfigs/api_url_config.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pms_pkce_lib/providers/pms_provider.dart';
+
+/// プロバイダ構造体
+final providers= PkceProviersStruct();
 
 ApiUrlConfig defaultApiUrlConfig = ApiUrlConfig(
   baseUrl: 'https://example.com',
@@ -10,19 +14,18 @@ ApiUrlConfig defaultApiUrlConfig = ApiUrlConfig(
   certData: null,
 );
 
-class ParameterPage extends StatefulWidget {
+class ParameterPage extends ConsumerStatefulWidget {
   const ParameterPage({super.key});
 
   @override
-  State<ParameterPage> createState() => _ParameterPageState();
+  ParameterPageState createState() => ParameterPageState();
 }
 
-class _ParameterPageState extends State<ParameterPage> {
-  ParameterModel parameterModel = ParameterModel();//パラメータモデル
-
+class ParameterPageState extends ConsumerState<ParameterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final parameter=ref.watch(providers.parameterModelProvider);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -34,7 +37,7 @@ class _ParameterPageState extends State<ParameterPage> {
             labelText: 'Base URL',
           ),
           onChanged: (value) {
-            parameterModel.baseUrl = value;
+            parameter.baseUrl = value;
           },
         ),
         SizedBox(height: 16),
@@ -44,7 +47,7 @@ class _ParameterPageState extends State<ParameterPage> {
             labelText: 'API Path',
           ),
           onChanged: (value) {
-            parameterModel.clientId = value;
+            parameter.clientId = value;
           },
         ),
         SizedBox(height: 16),
@@ -54,7 +57,7 @@ class _ParameterPageState extends State<ParameterPage> {
             labelText: 'Token',
           ),
           onChanged: (value) {
-            parameterModel.token = value;
+            parameter.token = value;
           },
         ),
         SizedBox(height: 16),
@@ -64,13 +67,13 @@ class _ParameterPageState extends State<ParameterPage> {
             labelText: 'Cert File Path',
           ),
           onChanged: (value) {
-            parameterModel.certFilePath = value;
+            parameter.certFilePath = value;
           },
         ),
         SizedBox(height: 16),
         ElevatedButton(
           onPressed: () async {
-            ApiUrlConfig config = await parameterModel.convrt();
+            ApiUrlConfig config = await parameter.convrt();
             // Handle the button press, e.g., save parameters or fetch token
             print('Base URL: ${config.baseUrl}');
             print('API Path: ${config.apiPath}');

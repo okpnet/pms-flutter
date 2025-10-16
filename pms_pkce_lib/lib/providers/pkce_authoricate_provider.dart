@@ -8,13 +8,20 @@ import 'package:pms_extends/helpers/convert_helper.dart';
 import '../extends/auth_event_factory.dart';
 import 'pms_provider.dart';
 
+/// PKCE認証プロバイダー
 class PkceAuthenticatorProvider {
+  /// URL設定
   final PkceUrlConfig urlConfig;
+  /// 認証状態モデル
   final AuthStateModel state;
+  /// 認証イベントストリームコントローラー
   final StreamController<AuthEvent> _authEventStream =
       StreamController<AuthEvent>();
+  /// HTTP POSTプロバイダー
   final PostProvider postProvider;
+  /// 認証イベントストリーム
   Stream<AuthEvent> get stream => _authEventStream.stream;
+  /// 認証イベントストリームシンク
   StreamSink<AuthEvent> get streamSink => _authEventStream;
 
   PkceAuthenticatorProvider({
@@ -22,23 +29,23 @@ class PkceAuthenticatorProvider {
     required this.state,
     required this.postProvider,
   });
-
-  factory PkceAuthenticatorProvider.create(PkceUrlConfig urlConfig, AuthStateModel state) {
+/// PKCE認証プロバイダー生成
+  factory PkceAuthenticatorProvider.create(PkceUrlConfig urlConfig,{ AuthStateModel? state}) {
     return PkceAuthenticatorProvider(
       urlConfig: urlConfig,
-      state: state,
+      state: state ?? AuthStateModel(pkce: PKCEModel.generate()),
       postProvider: HttpPostProvider(),
     );
   }
-
-  factory PkceAuthenticatorProvider.create(
+/// PKCE認証プロバイダー生成（JSON文字列から）
+  factory PkceAuthenticatorProvider.createFromJson(
     String pkceUrljsonSource,
-    AuthStateModel state,
+    {AuthStateModel? state}
   ) {
     var configMap = PkceUrlConfig.fromJsonString(pkceUrljsonSource);
     return PkceAuthenticatorProvider(
       urlConfig: configMap,
-      state: state,
+      state: state?? AuthStateModel(pkce: PKCEModel.generate()),
       postProvider: HttpPostProvider(),
     );
   }
