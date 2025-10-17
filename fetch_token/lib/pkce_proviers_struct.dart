@@ -17,7 +17,8 @@ class PkceProviersStruct {
     });
     pkceUrlConfigProvider = Provider<PkceUrlConfig>((ref) {
       final param = ref.watch(parameterModelProvider);
-      return PkceUrlConfig.fromParameter(param); // コンバート処理
+      final a=param.convrt();
+      return a; // コンバート処理
     });
     pkceAuthenticatorProvider = Provider<PkceAuthenticatorProvider>((ref) {
       final config = ref.watch(pkceUrlConfigProvider);
