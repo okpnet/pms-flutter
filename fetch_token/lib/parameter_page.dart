@@ -73,19 +73,19 @@ class ParameterPageState extends ConsumerState<ParameterPage> {
         SizedBox(height: 16),
         ElevatedButton(
           onPressed: () async {
-            ApiUrlConfig config = await parameter.convrt();
-            // Handle the button press, e.g., save parameters or fetch token
-            print('Base URL: ${config.baseUrl}');
-            print('API Path: ${config.apiPath}');
-            print('Cert Data Length: ${config.certData?.lengthInBytes ?? 0}');
-            final authModel=AuthStateModel(pkce:PKCEModel.generate());
-            final 
-            final provider=PkceAuthenticatorProvider.create();
-              postProvider: HttpPostProvider(),
-              urlConfig: config,
+            // ApiUrlConfig config = await parameter.convrt();
+            // // Handle the button press, e.g., save parameters or fetch token
+            // print('Base URL: ${config.baseUrl}');
+            // print('API Path: ${config.apiPath}');
+            // print('Cert Data Length: ${config.certData?.lengthInBytes ?? 0}');
+            // final authModel=AuthStateModel(pkce:PKCEModel.generate());
+            // final 
+            // final provider=PkceAuthenticatorProvider.create();
+            //   postProvider: HttpPostProvider(),
+            //   urlConfig: config,
 
-            );
-            provider.
+            // );
+            // provider.
           },
           child: Text('Get    Token'),
         ),

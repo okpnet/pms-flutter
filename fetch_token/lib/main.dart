@@ -1,5 +1,6 @@
 import 'package:fetch_token/login_page.dart';
 import 'package:fetch_token/parameter_page.dart';
+import 'package:fetch_token/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -40,7 +41,14 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: FutureBuilder(
+        future: Future.delayed(Duration(seconds: 2), () {
+          // 初期化コードをここに記述
+          return true;
+        }),
+        builder: (context,snapshot){
+          return snapshot.connectionState == ConnectionState.done ? ParameterPage() : SplashScreen();
+        }) // const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }

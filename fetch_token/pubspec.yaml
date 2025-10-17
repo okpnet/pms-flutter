@@ -39,6 +39,7 @@ dependencies:
   pms_pkce_lib:
     path: ../pms_pkce_lib
   flutter_riverpod: ^3.0.3
+  file_picker: ^10.3.3
 
 dev_dependencies:
   flutter_test:
