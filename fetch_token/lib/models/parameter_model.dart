@@ -11,7 +11,7 @@ class ParameterModel  {
     return ApiUrlConfig(
       baseUrl: baseUrl ?? "",
       apiPath: clientId ?? "",
-      certData: certFilePath==null || certFilePath!.length==0 ? null  : await FileHelper.readBuffer(certFilePath!),
+      certData: certFilePath==null || certFilePath!.isEmpty ? null  : await FileHelper.readBuffer(certFilePath!),
     );
   }
 }

@@ -80,11 +80,11 @@ class ParameterPageState extends ConsumerState<ParameterPage> {
             print('Cert Data Length: ${config.certData?.lengthInBytes ?? 0}');
             final authModel=AuthStateModel(pkce:PKCEModel.generate());
             final 
-            final provider=PkceAuthenticatorProvider.create();
+            provider=PkceAuthenticatorProvider.create();
               postProvider: HttpPostProvider(),
               urlConfig: config,
 
-            );
+            )
             provider.
           },
           child: Text('Get    Token'),
