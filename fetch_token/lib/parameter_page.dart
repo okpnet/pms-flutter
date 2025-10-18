@@ -1,4 +1,5 @@
 
+import 'package:fetch_token/file_helper.dart';
 import 'package:fetch_token/models/parameter_model.dart';
 import 'package:fetch_token/pkce_proviers_struct.dart';
 import 'package:flutter/material.dart';
@@ -64,12 +65,39 @@ class ParameterPageState extends ConsumerState<ParameterPage> {
         TextField(
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            labelText: 'Cert File Path',
+            labelText: 'Client ID',
           ),
           onChanged: (value) {
-            parameter.certFilePath = value;
+            parameter.clientId = value;
           },
         ),
+        SizedBox(height: 16),
+        Row(
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Cert File Path',
+                ),
+                onChanged: (value) {
+                  parameter.certFilePath = value;
+                },
+              ),
+              ElevatedButton(
+                onPressed: !parameter.isValid ? null :  ()  async{
+                    FileHelper.pickKmlFile( ['crt','cer','pem'] ).then((result) {
+                      if(result==null || result.count==0)return;
+                      parameter.certFilePath=result.paths.first;
+                      setState(() {
+                        parameter.certFilePath=result.paths.first;
+                      });
+                    });
+                },
+                 child: const Text("select file")
+                 )
+            ],
+        ),
+
         SizedBox(height: 16),
         ElevatedButton(
           onPressed: () async {

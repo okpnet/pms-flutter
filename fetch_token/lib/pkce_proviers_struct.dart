@@ -6,7 +6,7 @@ import 'package:pms_pkce_lib/providers/pms_provider.dart';
 
 class PkceProviersStruct {
   late final StateProvider<ParameterModel> parameterModelProvider;
-  late final Provider<PkceUrlConfig> pkceUrlConfigProvider;
+  late final FutureProvider<PkceUrlConfig> pkceUrlConfigProvider;
   late final Provider<PkceAuthenticatorProvider> pkceAuthenticatorProvider;
   late final StreamProvider<AuthEvent> pkceAuthEventStreamProvider;
 
@@ -15,13 +15,12 @@ class PkceProviersStruct {
       // 初期化済みの状態を返す（必要に応じて StateNotifier にしてもOK）
       return ParameterModel();
     });
-    pkceUrlConfigProvider = Provider<PkceUrlConfig>((ref) {
+    pkceUrlConfigProvider = FutureProvider<PkceUrlConfig>((ref) async {
       final param = ref.watch(parameterModelProvider);
-      final a=param.convrt();
-      return a; // コンバート処理
+      return await param.convertToPkceUrlConfig(); // コンバート処理
     });
     pkceAuthenticatorProvider = Provider<PkceAuthenticatorProvider>((ref) {
-      final config = ref.watch(pkceUrlConfigProvider);
+      final config =ref.watch(pkceUrlConfigProvider).requireValue;
       return PkceAuthenticatorProvider.create(config);
     });
     pkceAuthEventStreamProvider = StreamProvider.autoDispose<AuthEvent>((ref) {
