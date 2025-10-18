@@ -1,4 +1,3 @@
-import 'package:fetch_token/login_page.dart';
 import 'package:fetch_token/parameter_page.dart';
 import 'package:fetch_token/splash_screen.dart';
 import 'package:flutter/material.dart';
