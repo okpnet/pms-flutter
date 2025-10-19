@@ -27,7 +27,11 @@ class ParameterPageState extends ConsumerState<ParameterPage> {
   @override
   Widget build(BuildContext context) {
     final parameter=ref.watch(providers.parameterModelProvider);
-    return Column(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Parameter Page'),
+      ),
+      body: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text('Get token with parameters'),
@@ -71,32 +75,32 @@ class ParameterPageState extends ConsumerState<ParameterPage> {
             parameter.clientId = value;
           },
         ),
-        SizedBox(height: 16),
-        Row(
-          children: [
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Cert File Path',
-                ),
-                onChanged: (value) {
-                  parameter.certFilePath = value;
-                },
-              ),
-              ElevatedButton(
-                onPressed: !parameter.isValid ? null :  ()  async{
-                    FileHelper.pickKmlFile( ['crt','cer','pem'] ).then((result) {
-                      if(result==null || result.count==0)return;
-                      parameter.certFilePath=result.paths.first;
-                      setState(() {
-                        parameter.certFilePath=result.paths.first;
-                      });
-                    });
-                },
-                 child: const Text("select file")
-                 )
-            ],
-        ),
+        // SizedBox(height: 16),
+        // Row(
+        //   children: [
+        //     TextField(
+        //       decoration: InputDecoration(
+        //         border: OutlineInputBorder(),
+        //         labelText: 'Cert File Path',
+        //         ),
+        //         onChanged: (value) {
+        //           parameter.certFilePath = value;
+        //         },
+        //       ),
+        //       ElevatedButton(
+        //         onPressed: !parameter.isValid ? null :  ()  async{
+        //             FileHelper.pickKmlFile( ['crt','cer','pem'] ).then((result) {
+        //               if(result==null || result.count==0)return;
+        //               parameter.certFilePath=result.paths.first;
+        //               setState(() {
+        //                 parameter.certFilePath=result.paths.first;
+        //               });
+        //             });
+        //         },
+        //          child: const Text("select file")
+        //          )
+        //     ],
+        // ),
 
         SizedBox(height: 16),
         ElevatedButton(
@@ -118,6 +122,7 @@ class ParameterPageState extends ConsumerState<ParameterPage> {
           child: Text('Get    Token'),
         ),
       ],
+    )
     );
   }
 }

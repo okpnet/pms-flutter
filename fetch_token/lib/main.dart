@@ -41,12 +41,24 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: FutureBuilder(
-        future: Future.delayed(Duration(seconds: 2), () {
+        future: Future.delayed(Duration(seconds: 10), () {
           // 初期化コードをここに記述
           return true;
         }),
         builder: (context,snapshot){
-          return snapshot.connectionState == ConnectionState.done ? ParameterPage() : SplashScreen();
+            if (snapshot.connectionState == ConnectionState.waiting) {
+            print('Loading...');
+            return SplashScreen();
+          } else if (snapshot.hasError) {
+            print('Error: ${snapshot.error}');
+            return Center(child: Text('エラーが発生しました'));
+          } else {
+            print('Done. Showing ParameterPage.');
+            return ParameterPage();
+          }
+
+          // return snapshot.connectionState == ConnectionState.done ? ParameterPage() : SplashScreen();
+          
         }) // const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
